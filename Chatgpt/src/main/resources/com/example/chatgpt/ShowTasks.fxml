@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+
+<FlowPane fx:id="tasksContainer" alignment="CENTER" hgap="20.0" prefHeight="450.0" prefWidth="875.0" style="-fx-background-color: #f4f6f7; -fx-padding: 20;" vgap="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.chatgpt.ShowTasksController">
+   <children>
+      <!-- VBox to hold the Label and Task List -->
+      <VBox alignment="CENTER" prefHeight="0.0" prefWidth="611.0" spacing="20.0" style="-fx-background-color: #ffffff; -fx-border-color: #dfe6e9; -fx-border-width: 2px; -fx-padding: 20; -fx-background-radius: 10; -fx-border-radius: 10;">
+         <children>
+            <!-- Title Label with enhanced styling -->
+            <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2d3436; -fx-font-family: 'Arial';" text="Your Tasks" />
+
+            <!-- Placeholder for the tasks, now inside the VBox -->
+            <VBox fx:id="tasksList" alignment="CENTER" prefHeight="300.0" prefWidth="800.0" spacing="15.0" style="-fx-padding: 10;">
+               <!-- Tasks will be dynamically loaded here -->
+            </VBox>
+         </children>
+      </VBox>
+
+      <!-- Go to Task Manager Button at the bottom with improved styling -->
+      <VBox alignment="CENTER" spacing="15.0">
+         <Button mnemonicParsing="false" onAction="#redirectToTaskManager" style="-fx-background-color: #0984e3; -fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 12 30; -fx-border-radius: 12; -fx-background-radius: 12; -fx-font-family: 'Arial';" text="Go to Task Manager" />
+      </VBox>
+   </children>
+</FlowPane>

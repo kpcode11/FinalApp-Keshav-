@@ -1,0 +1,73 @@
+.primary-color{
+    -fx-background-color: #140329
+}
+.secondary-color{
+    -fx-background-color: #281352
+}
+.third-color{
+    -fx-background-color: #3f50e7
+}
+. rect-round{
+    -fx-background-radius: 10;
+}
+/* Style for the axis labels */
+.chart-axis .axis-label {
+    -fx-text-fill: white;  /* Sets the axis label text color to white */
+    -fx-font-family: "Arial Black";  /* Sets the axis label font to Arial Black */
+}
+
+/* Style for the tick labels on the Y axis */
+.chart .y-axis .tick-label {
+    -fx-text-fill: white;  /* Sets the Y axis tick label color to white */
+    -fx-font-family: "Arial Black";  /* Sets the tick label font to Arial Black */
+}
+
+/* Optional: Style for the tick labels on the X axis */
+.chart .x-axis .tick-label {
+    -fx-text-fill: white;  /* Sets the X axis tick label color to white */
+    -fx-font-family: "Arial Black";  /* Sets the tick label font to Arial Black */
+}
+
+/* Optional: Style for the chart title */
+.chart .chart-title {
+    -fx-text-fill: white;  /* Sets the chart title color to white */
+    -fx-font-family: "Arial Black";  /* Sets the title font to Arial Black */
+}
+
+/* Optional: Style for the chart background */
+.chart-plot-background {
+    -fx-background-color: #2a2a2a; /* Dark background for the plot area */
+}
+
+.chart-legend {
+    -fx-background-color: transparent; /* Makes the legend background transparent */
+}
+
+/* Style for the legend item symbol */
+.chart-legend-item-symbol {
+    -fx-background-color: #f1602c; /* Change to the desired color, e.g., red */
+}
+
+/* Optional: Style for the legend text */
+.chart-legend-item {
+    -fx-text-fill: white;  /* Change legend text color */
+    -fx-font-family: "Arial Black";  /* Set the font to Arial Black */
+}
+
+.date-picker {
+    -fx-background-color: #ffffff;   /* Change background color */
+    -fx-text-fill: #2ecc71;          /* Change text color */
+}
+
+.date-picker .arrow-button {
+    -fx-background-color: #3498db;   /* Change arrow button color */
+}
+
+.date-picker:hover {
+    -fx-background-color: #e74c3c;   /* Change background on hover */
+}
+
+.date-picker .text-field {
+    -fx-text-fill: #3498db;          /* Change the text color in the text field */
+}
+
