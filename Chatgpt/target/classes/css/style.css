@@ -71,3 +71,40 @@
     -fx-text-fill: #3498db;          /* Change the text color in the text field */
 }
 
+/* Styling for the ComboBox selected text color */
+.combo-box .list-cell:selected {
+    -fx-text-fill: white; /* Set the selected text color to white */
+    /*-fx-background-color: #2a9df4; !* You can set the background color as well if needed *!*/
+}
+
+.combo-box .list-cell:filled:selected {
+    -fx-text-fill: white;
+}
+
+/* Change the selected date text color to white and background color */
+.date-picker .cell:filled:selected, .date-picker .cell:selected {
+    -fx-background-color: #271352;  /* Background color of the selected date */
+    -fx-text-fill: white;           /* Text color of the selected date */
+}
+
+/* Change the color of the selected date in the drop-down calendar */
+.date-picker .cell:filled:hover {
+    -fx-background-color: #3f1f7b;  /* Hover background color */
+    -fx-text-fill: white;           /* Hover text color */
+}
+
+/* Change the default text color in the DatePicker's text field */
+.date-picker .text-field {
+    -fx-text-fill: white;            /* Text color of the date field */
+    -fx-background-color: #271352;   /* Background color of the date field */
+}
+
+/* Change the arrow button background and icon */
+.date-picker .arrow-button {
+    -fx-background-color: #271352;
+}
+
+.date-picker .arrow {
+    -fx-background-color: white;  /* Arrow color */
+}
+

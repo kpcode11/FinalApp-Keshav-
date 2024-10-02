@@ -62,6 +62,11 @@ public class SubjectsController {
 
         try {
             int marks = Integer.parseInt(marksText);
+            // Check for negative marks
+            if (marks < 0) {
+                showAlert(Alert.AlertType.ERROR, "Input Error", "Marks cannot be negative.");
+                return;
+            }
 
             // Add subject to the database
             addSubjectToDatabase(subjectName, marks, loggedInUsername);

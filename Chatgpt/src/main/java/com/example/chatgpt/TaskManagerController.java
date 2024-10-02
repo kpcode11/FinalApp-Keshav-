@@ -14,7 +14,9 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -23,6 +25,7 @@ import javafx.scene.control.Alert.AlertType;
 
 public class TaskManagerController {
 
+    private NotificationManager notificationManager;
 
     @FXML
     private Button taskManagerButton;
@@ -44,6 +47,7 @@ public class TaskManagerController {
 
     @FXML
     private void logOut() {
+        notificationManager.shutdown();
         // Close the current window (dashboard)
         Stage stage = (Stage) Stage.getWindows().get(0);
         stage.close();
@@ -156,6 +160,7 @@ public class TaskManagerController {
 
     @FXML
     public void initialize() {
+        notificationManager = new NotificationManager();
         // Add items to the ComboBox when the controller is initialized
         categoryComboBox.setItems(FXCollections.observableArrayList("Work", "Personal", "Significant Date"));
 
@@ -187,15 +192,31 @@ public class TaskManagerController {
             return;
         }
 
+        // Validate the date to ensure it is not in the past
+        if (taskDate.isBefore(LocalDate.now())) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Please select a valid future date for the task.");
+            return;
+        }
+
         // Validate the time input (HH:mm)
+        LocalTime selectedTime;
         try {
-            LocalTime.parse(taskTime, DateTimeFormatter.ofPattern("HH:mm"));
+            selectedTime = LocalTime.parse(taskTime, DateTimeFormatter.ofPattern("HH:mm"));
+
+            // If the task date is today, ensure the time is in the future
+            if (taskDate.equals(LocalDate.now())) {
+                if (selectedTime.isBefore(LocalTime.now())) {
+                    showAlert(Alert.AlertType.ERROR, "Error", "Please select a time that is in the future.");
+                    return;
+                }
+            }
+
         } catch (Exception e) {
             showAlert(Alert.AlertType.ERROR, "Error", "Please enter a valid time (HH:mm).");
             return;
         }
 
-        // Retrieve the currently logged-in user (replace this line with actual logic for logged-in user)
+        // Retrieve the currently logged-in user
         String loggedInUser = LoginController.loggedInUsername; // Assuming this variable is defined in LoginController
 
         if (loggedInUser == null) {
@@ -203,12 +224,16 @@ public class TaskManagerController {
             return;
         }
 
-        // SQL query to insert task
-        String insertTaskQuery = "INSERT INTO tasks (username, task_name, category, task_date, task_time, reminder,priority) VALUES (?, ?, ?, ?, ?, ?,?)";
+        // Calculate the reminder time
+        LocalDateTime reminderTime = calculateReminderTime(taskDate, selectedTime, reminder);
+        Timestamp sqlReminderTime = reminderTime != null ? Timestamp.valueOf(reminderTime) : null; // Move this outside the if block
+
+        // SQL query to insert task, including reminder time
+        String insertTaskQuery = "INSERT INTO tasks (username, task_name, category, task_date, task_time, reminder, priority, reminder_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         // Execute database query
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("INSERT INTO tasks (username, task_name, category, task_date, task_time, reminder,priority) VALUES (?, ?, ?, ?, ?, ?,?)")) {
+             PreparedStatement stmt = conn.prepareStatement(insertTaskQuery)) {
 
             // Set query parameters
             stmt.setString(1, loggedInUser);
@@ -218,6 +243,7 @@ public class TaskManagerController {
             stmt.setString(5, taskTime);
             stmt.setString(6, reminder != null ? reminder : "No Reminder");
             stmt.setString(7, selectedPriority);
+            stmt.setTimestamp(8, sqlReminderTime); // Store reminder time
 
             // Execute the update
             stmt.executeUpdate();
@@ -227,6 +253,25 @@ public class TaskManagerController {
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Database Error", "An error occurred while saving the task: " + e.getMessage());
+        }
+    }
+
+    // Calculate reminder time based on user selection
+    private LocalDateTime calculateReminderTime(LocalDate taskDate, LocalTime selectedTime, String reminder) {
+        LocalDateTime taskDateTime = LocalDateTime.of(taskDate, selectedTime);
+        switch (reminder) {
+            case "15 Minutes Before":
+                return taskDateTime.minusMinutes(15);
+            case "30 Minutes Before":
+                return taskDateTime.minusMinutes(30);
+            case "1 Hour Before":
+                return taskDateTime.minusHours(1);
+            case "2 Hours Before":
+                return taskDateTime.minusHours(2);
+            case "1 Day Before":
+                return taskDateTime.minusDays(1);
+            default:
+                return null; // No reminder set
         }
     }
 }
