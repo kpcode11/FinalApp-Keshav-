@@ -108,3 +108,16 @@
     -fx-background-color: white;  /* Arrow color */
 }
 
+/* For subject labels and percentages */
+.subject-label, .attendance-percentage {
+    -fx-text-fill: white;
+    -fx-font-family: 'Arial Black';
+}
+
+/* For total attendance percentage */
+.total-attendance {
+    -fx-text-fill: white;
+    -fx-font-family: 'Arial Black';
+}
+
+

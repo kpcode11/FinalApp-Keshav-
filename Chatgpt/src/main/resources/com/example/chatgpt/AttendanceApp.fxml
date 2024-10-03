@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" spacing="20" style="-fx-padding: 20; -fx-background-color: #140329;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/22" fx:controller="com.example.chatgpt.AttendanceController">
+    <!-- Title Label -->
+    <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Attendance Tracker" textFill="WHITE">
+      <font>
+         <Font name="Arial Black" size="14.0" />
+      </font></Label>
+
+    <!-- Add Subject Section -->
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <TextField fx:id="subjectNameField" promptText="Enter Subject Name" style="-fx-text-fill: white; -fx-background-color: #281352;">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font></TextField>
+        <TextField fx:id="minPercentageField" promptText="Min Attendance (%)" style="-fx-text-fill: white; -fx-background-color: #281352;">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font></TextField>
+        <Button onAction="#handleAddSubject" style="-fx-background-color: #281352; -fx-background-radius: 20;" text="Add Subject" textFill="WHITE">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font></Button>
+    </HBox>
+
+    <!-- Subject List -->
+    <VBox fx:id="subjectList" minHeight="300" style="-fx-border-color: black; -fx-border-width: 1px; -fx-padding: 10;" />
+
+    <!-- Back to Dashboard Button -->
+    <Button onAction="#goBackToDashboard" style="-fx-background-color: #281352; -fx-background-radius: 20;" text="Back to Dashboard" textFill="WHITE">
+      <font>
+         <Font name="Arial Black" size="12.0" />
+      </font></Button>
+
+    <!-- Label for total attendance percentage -->
+    <Label fx:id="totalAttendanceLabel" text="Total Attendance: 0%" textFill="WHITE">
+      <font>
+         <Font name="Arial Black" size="12.0" />
+      </font></Label>
+</VBox>

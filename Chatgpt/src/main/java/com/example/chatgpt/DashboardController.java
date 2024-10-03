@@ -79,14 +79,32 @@ public class DashboardController {
     }
 
     @FXML
-    private void openAttendance() {
-        showAlert("Attendance", "This is the Attendance section.");
+    private void openAttendance(ActionEvent event) {
+        try {
+            // Load the AttendanceApp.fxml file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AttendanceApp.fxml"));
+            Parent attendanceRoot = loader.load();
+
+            // You can pass the logged-in user information to the AttendanceController if needed
+            AttendanceController attendanceController = loader.getController();
+            attendanceController.setLoggedInUser(loggedInUsername); // Optional: Pass the logged-in username
+            attendanceController.loadSubjectsForUser(); // Load subjects after user logs in
+
+            // Get the current stage (window) and set the new scene
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.setScene(new Scene(attendanceRoot));
+            currentStage.setTitle("Attendance Tracker");
+            currentStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    @FXML
-    private void openPerformance() {
-        showAlert("Performance", "This is the Performance section.");
-    }
+
+//    @FXML
+//    private void openPerformance() {
+//        showAlert("Performance", "This is the Performance section.");
+//    }
 
     @FXML
     private void logOut() {
